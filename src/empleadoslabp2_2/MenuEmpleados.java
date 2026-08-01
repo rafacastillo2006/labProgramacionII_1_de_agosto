@@ -2,7 +2,6 @@ package empleadoslabp2_2;
 
 import javax.swing.*;
 import java.awt.*;
-import labProgramacionII_1_de_agosto.Empleado;
 
 
 public class MenuEmpleados extends JFrame {
