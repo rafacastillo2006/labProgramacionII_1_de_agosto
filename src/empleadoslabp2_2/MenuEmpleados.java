@@ -54,6 +54,26 @@ public class MenuEmpleados extends JFrame {
         panelSuperior.add(textoDatos);
         add(panelSuperior, BorderLayout.NORTH);
 
+        JPanel panelOpciones = new JPanel(new GridLayout(2,2,25,25));
+        panelOpciones.setBackground(Color.darkGray);
+        panelOpciones.setBorder(BorderFactory.createEmptyBorder(50,80,50,80));
+
+        JButton registrarHoras = new JButton("Registrar horas");
+        JButton calcularPago  = new JButton("Calcular Pago");
+        JButton mostrarInfo = new  JButton("Ver Información");
+        JButton accionVentas = new JButton("Registrar Ventas");
+
+        Font fuenteBTNs = new Font("Times New Roman", Font.BOLD, 14);
+        JButton[] botonesMenu = {registrarHoras, calcularPago, mostrarInfo, accionVentas};
+
+        for (int i  = 0; i < botonesMenu.length; i++) {
+            botonesMenu[i].setFont(fuenteBTNs);
+            botonesMenu[i].setBackground(Color.WHITE);
+            panelOpciones.add(botonesMenu[i]);
+        }
+
+        add(panelOpciones,  BorderLayout.CENTER);
+
 setVisible(true);
     }
 }

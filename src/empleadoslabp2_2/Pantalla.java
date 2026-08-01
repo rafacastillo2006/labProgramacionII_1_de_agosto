@@ -20,14 +20,16 @@ public class Pantalla extends JFrame {
 
         JButton registrarEmpleado = new JButton("Registrar Empleado");
         JButton buscarEmpleado = new JButton("Buscar Empleado");
+        JButton generarReporte = new JButton("Generar Reporte");
         JButton salir = new JButton("Salir");
-        JButton[] listaBotones = {registrarEmpleado, buscarEmpleado, salir};
+        JButton[] listaBotones = {registrarEmpleado, buscarEmpleado, generarReporte, salir};
         Font fuenteBotones = new Font("Times New Roman", Font.BOLD, 30);
 
 for(int i= 0;i<listaBotones.length;i++){
     listaBotones[i].setPreferredSize(new Dimension(400, 200));
     listaBotones[i].setBackground(Color.white);
     listaBotones[i].setFont(fuenteBotones);
+
 }
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -38,7 +40,9 @@ for(int i= 0;i<listaBotones.length;i++){
         add(registrarEmpleado, gbc);
         gbc.gridy = 1;
         add(buscarEmpleado, gbc);
-        gbc.gridy = 2;
+        gbc.gridy = 3;
+        add(generarReporte, gbc);
+        gbc.gridy = 4;
         add(salir, gbc);
 
         registrarEmpleado.addActionListener(e -> {
@@ -71,8 +75,7 @@ for(int i= 0;i<listaBotones.length;i++){
                     Empleado nuevoEmpleado = null;
 
                     if (seleccionTipo.equals("Estándar")) {
-                        nuevoEmpleado = new Empleado(codigo, nombre, Calendar.getInstance().getTime(), salario, foto);
-
+                        nuevoEmpleado = new Empleado(codigo, nombre, salario, foto);
                     } else if (seleccionTipo.equals("Ventas")) {
                         nuevoEmpleado = new EmpleadoVentas(codigo, nombre, salario, foto);
 
@@ -101,12 +104,31 @@ for(int i= 0;i<listaBotones.length;i++){
         });
 
         buscarEmpleado.addActionListener(e -> {
-
+            String codigo = JOptionPane.showInputDialog(this, "Ingrese el código del empleado a buscar:");
+            if (codigo != null && !codigo.trim().isEmpty()) {
+                try {
+                    Empleado empEncontrado = empresa.buscarPorCodigo(codigo);
+                    new MenuEmpleados(empEncontrado);
+                    dispose();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Empleado no encontrado", JOptionPane.ERROR_MESSAGE);
+                }
+            }
 
         });
 
         salir.addActionListener(e -> {
             System.exit(0);
+        });
+
+        generarReporte.addActionListener(e -> {
+            String reporte = empresa.generarReporte();
+            JTextArea textArea = new JTextArea(reporte);
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(500, 300));
+
+            JOptionPane.showMessageDialog(this, scrollPane, "Reporte Empresa", JOptionPane.INFORMATION_MESSAGE);
         });
         setVisible(true);
     }
