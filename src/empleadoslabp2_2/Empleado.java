@@ -1,28 +1,24 @@
-
-package labProgramacionII_1_de_agosto;
+package empleadoslabp2_2;
 
 import java.util.Calendar;
-import java.util.Date;
+
 public class Empleado {
+    
     protected String codigo;
     protected String nombre;
-    protected Date Fechacontratacion;
+    protected Calendar fechaContratacion;
     protected double salario;
     protected int horas;
     protected String foto;
     
-    public Empleado(String codigo, String nombre, Date Fechacontratacion,double salario, String foto){
+    public Empleado(String codigo, String nombre, double salario, String foto){
         this.codigo=codigo;
         this.nombre= nombre;
-        if (Fechacontratacion != null) {
-        this.Fechacontratacion = Fechacontratacion;
-        } else {
-            this.Fechacontratacion = new Date();
-        }
         this.salario=salario;
+        fechaContratacion = Calendar.getInstance();
         this.horas=0;
         this.foto=foto;
-        }
+    }
 
     public String getCodigo() {
         return codigo;
@@ -32,8 +28,8 @@ public class Empleado {
         return nombre;
     }
 
-    public Date getFechacontratacion() {
-        return Fechacontratacion;
+    public Calendar getFechacontratacion() {
+        return fechaContratacion;
     }
 
     public double getSalario() {
@@ -51,7 +47,6 @@ public class Empleado {
     public void registrarHorasTrabajadas(int horas){
         if (horas <0){
             throw new IllegalArgumentException("Las horas trabajadas no pueden ser negativas");
-            
         }
         this.horas=horas;
     }
@@ -64,7 +59,9 @@ public class Empleado {
         deduccion= this.salario * 0.035;
         return Math.max(0, pago-deduccion);
     }
-    public String mostrarinfo(){
-        return "Codigo: "+ codigo + " Nombre: " +nombre + "Contratacion: "+Fechacontratacion;
+    
+    public String mostrarInfo(){
+        return "Codigo: " + codigo + " Nombre: " + nombre + "Contratacion: " + fechaContratacion;
     }
+    
 }
