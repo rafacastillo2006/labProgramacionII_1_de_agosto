@@ -2,11 +2,14 @@ package empleadoslabp2_2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
 
 public class Pantalla extends JFrame {
 
+    private static Empresa empresa = new Empresa("Empresa Programación 2");
+
     public Pantalla() {
-        setTitle("Menú Principal");
+        setTitle("Gestor de Empleados - " + empresa.getNombre());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -39,6 +42,61 @@ for(int i= 0;i<listaBotones.length;i++){
         add(salir, gbc);
 
         registrarEmpleado.addActionListener(e -> {
+            String[] tipos = {"Estandar", "Ventas", "Temporal"};
+            String seleccionTipo = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Tipo de empleado a registrar:",
+                    "Tipo de Empleado",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    tipos,
+                    tipos[0]
+            );
+
+            if (seleccionTipo != null) {
+                try {
+                    String codigo = JOptionPane.showInputDialog(this, "Crear código para el empleado:");
+                    if (codigo == null || codigo.trim().isEmpty()) return;
+
+                    String nombre = JOptionPane.showInputDialog(this, "Ingresar nombre del empleado:");
+                    if (nombre == null || nombre.trim().isEmpty()) return;
+
+                    String salarioStr = JOptionPane.showInputDialog(this, "ingresar salario base:");
+                    if (salarioStr == null || salarioStr.trim().isEmpty()) return;
+                    double salario = Double.parseDouble(salarioStr);
+
+                    String foto = JOptionPane.showInputDialog(this, "Fotografia:");
+                    if (foto == null) foto = "";
+
+                    Empleado nuevoEmpleado = null;
+
+                    if (seleccionTipo.equals("Estándar")) {
+                        nuevoEmpleado = new Empleado(codigo, nombre, Calendar.getInstance().getTime(), salario, foto);
+
+                    } else if (seleccionTipo.equals("Ventas")) {
+                        nuevoEmpleado = new EmpleadoVentas(codigo, nombre, salario, foto);
+
+                    } else if (seleccionTipo.equals("Temporal")) {
+                        String mesesStr = JOptionPane.showInputDialog(this, "Duración del contrato (meses):");
+                        int meses = Integer.parseInt(mesesStr);
+
+                        Calendar fechaFin = Calendar.getInstance();
+                        fechaFin.add(Calendar.MONTH, meses);
+
+                        nuevoEmpleado = new EmpleadoTemporal(codigo, nombre, salario, foto, fechaFin);
+                    }
+
+                    if (nuevoEmpleado != null) {
+                        empresa.registrarEmpleado(nuevoEmpleado);
+                        JOptionPane.showMessageDialog(this, "Empleado Registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Error en los datos numéricos ingresados.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalStateException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al Registrar", JOptionPane.WARNING_MESSAGE);
+                }
+            }
 
         });
 
