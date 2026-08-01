@@ -142,7 +142,7 @@ public class MenuEmpleados extends JFrame {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Opcion solamenta para vendedores. ", "Opción No Disponible", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Opcion solamente para vendedores. ", "Opción No Disponible", JOptionPane.WARNING_MESSAGE);
             }
         });
 
