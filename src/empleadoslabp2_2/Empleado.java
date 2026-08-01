@@ -1,6 +1,7 @@
 package empleadoslabp2_2;
 
 import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 public class Empleado {
     
@@ -60,8 +61,13 @@ public class Empleado {
         return Math.max(0, pago-deduccion);
     }
     
-    public String mostrarInfo(){
-        return "Codigo: " + codigo + " Nombre: " + nombre + "Contratacion: " + fechaContratacion;
+    public String mostrarInfo() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        String fechaFormateada = (fechaContratacion != null) ? sdf.format(fechaContratacion.getTime()) : "N/A";
+
+        return String.format("Código: %s | Nombre: %s | Fecha Contratación: %s | Salario: $%.2f | Horas: %d",
+                codigo, nombre, fechaFormateada, salario, horas);
     }
     
 }

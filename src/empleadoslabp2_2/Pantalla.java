@@ -74,7 +74,7 @@ for(int i= 0;i<listaBotones.length;i++){
 
                     Empleado nuevoEmpleado = null;
 
-                    if (seleccionTipo.equals("Estándar")) {
+                    if (seleccionTipo.equals("Estandar")) {
                         nuevoEmpleado = new Empleado(codigo, nombre, salario, foto);
                     } else if (seleccionTipo.equals("Ventas")) {
                         nuevoEmpleado = new EmpleadoVentas(codigo, nombre, salario, foto);
