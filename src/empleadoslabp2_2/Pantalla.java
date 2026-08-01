@@ -40,16 +40,16 @@ for(int i= 0;i<listaBotones.length;i++){
 
         registrarEmpleado.addActionListener(e -> {
 
-        })
+        });
 
         buscarEmpleado.addActionListener(e -> {
 
 
-        })
+        });
 
         salir.addActionListener(e -> {
             System.exit(0);
-        })
+        });
         setVisible(true);
     }
 }
